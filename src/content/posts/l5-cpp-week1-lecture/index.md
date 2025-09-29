@@ -35,9 +35,8 @@ int main() {
 `#include` in C resembles import in Java or Python, except that the imported material is a header file; what this means will be discussed later.  
 C中的`#include`类似于Java或Python中的import，不同之处在于导入的材料是头文件；这意味着什么将在后面讨论。  
 The angle brackets `<>` tell C to search for the `stdio.h` file in the compiler’s standard libraries.  
-C中的`#include`类似于Java或Python中的import，不同之处在于导入的材料是头文件；这意味着什么将在后面讨论。  
-Using quotes `""` is legal but tells C that the file should be in the same directory.  
-尖括号`<>`告诉C在编译器的标准库中搜索`stdio.h`文件。
+尖括号`<>`告诉C在编译器的标准库中搜索`stdio.h`文件。  
+Using quotes `""` is legal but tells C that the file should be in the same directory.    
 使用引号`""`是合法的，但会告诉C文件应该在同一个目录中。  
 
 C is not object oriented, and in C++ object orientation is not mandatory as it is in Java.  
