@@ -6,6 +6,8 @@ description: A simple example of a Markdown blog post with Mermaid.
 tags: [Markdown, Blogging, Mermaid]
 category: Examples
 draft: true
+series: Guide
+draft: false
 ---
 # Complete Guide to Markdown with Mermaid Diagrams
 
