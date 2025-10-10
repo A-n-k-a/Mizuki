@@ -6,8 +6,8 @@ description: 'Read more about Markdown features in Mizuki'
 image: ''
 tags: [Demo, Example, Markdown, mizuki]
 category: 'Examples'
-series: Guide
 draft: true 
+series: "Mizuki"
 ---
 
 ## GitHub Repository Cards
@@ -92,5 +92,3 @@ The content :spoiler[is hidden **ayyy**]!
 
 ```markdown
 The content :spoiler[is hidden **ayyy**]!
-
-```
