@@ -475,24 +475,30 @@ export const sakuraConfig: SakuraConfig = {
 // Pio 看板娘配置
 export const pioConfig: import("./types/config").PioConfig = {
 	enable: true, // 启用看板娘
-	models: ["/pio/models/pio/model.json"], // 默认模型路径
+	// 模型来自：https://github.com/imuncle/live2d
+	models: ["/pio/models/imuncle/illyasviel/illyasviel.model.json", "/pio/models/imuncle/liang/2.json", "/pio/models/imuncle/rem/model.json", "/pio/models/imuncle/uiharu/uiharu.model.json", "/pio/models/imuncle/saten/saten.model.json", "/pio/models/imuncle/kuroko/kuroko.model.json", "/pio/models/imuncle/mikoto/mikoto.model.json", "/pio/models/imuncle/index/model.json", "/pio/models/imuncle/seifuku/seifuku.model.json", "/pio/models/imuncle/shifuku2/shifuku2.model.json", "/pio/models/imuncle/katou_01/katou_01.model.json", "/pio/models/imuncle/snow_miku/model.json", "/pio/models/pio/model.json", "/pio/models/imuncle/Pio/model.json", "/pio/models/imuncle/Pio/model1.json", "/pio/models/imuncle/Pio/model2.json", "/pio/models/imuncle/Pio/model4.json", "/pio/models/imuncle/Pio/model5.json"], // 默认模型路径
 	position: "left", // 默认位置在右侧
 	width: 280, // 默认宽度
-	height: 250, // 默认高度
+	height: 350, // 默认高度
 	mode: "draggable", // 默认为可拖拽模式
 	hiddenOnMobile: true, // 默认在移动设备上隐藏
 	dialog: {
-		welcome: "Welcome to Mizuki Website!", // 欢迎词
+		welcome: "欢迎来到Anka的博客！", // 欢迎词，默认为“Welcome to Mizuki Website!”
 		touch: [
-			"What are you doing?",
-			"Stop touching me!",
-			"HENTAI!",
-			"Don't bully me like that!",
+			// "What are you doing?",
+			// "Stop touching me!",
+			// "HENTAI!",
+			// "Don't bully me like that!",
+			"你在干什么呢？",
+			"别摸我啦！",
+			"手...手放错地方了吧...",
+			"不要这样欺负我！",
 		], // 触摸提示
-		home: "Click here to go back to homepage!", // 首页提示
-		skin: ["Want to see my new outfit?", "The new outfit looks great~"], // 换装提示
-		close: "QWQ See you next time~", // 关闭提示
-		link: "https://github.com/matsuzaka-yuki/Mizuki", // 关于链接
+		home: "要回到主页嘛", // 首页提示，默认为“Click here to go back to homepage!”
+		// skin: ["Want to see my new outfit?", "The new outfit looks great~"], // 换装提示(换装前，换装后)
+		skin: ["想看看我的新衣服吗？", "新衣服真好看~"],
+		close: "QWQ下次再见惹～", // 关闭提示，默认为“QWQ See you next time~”
+		link: "https://github.com/A-n-k-a/Mizuki", // 关于链接
 	},
 };
 
