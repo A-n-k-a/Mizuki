@@ -180,3 +180,40 @@ Our product [core differentiated advantage]
 - 产品愿景声明：指导产品方向并确保与组织战略保持一致的关键战略工件
 - **Roadmap**: The slices (Releases) of the user story map can be seen as the preliminary form of a product roadmap, showing the product's delivery plan at different stages
 - 路线图：用户故事图的切片（发布）可以看作是产品路线图的初步形式，显示了产品在不同阶段的交付计划
+
+---
+
+## Seminar
+_For (target customer) who (statement of need or opportunity), the (product name) is a (product category) that (key benefit, reason to buy)._
+_Unlike (primary competitive alternative), our product (statement of primary differentiation)._
+<table>
+    <tr>
+        <td><strong>FOR: </strong></td>
+        <td>Target Customer</td>
+    </tr>
+    <tr>
+        <td><strong>WHO: </strong></td>
+        <td>Statement of need or opportunity</td>
+    </tr>
+    <tr>
+        <td><strong>THE: </strong></td>
+        <td>Product name</td>
+    </tr>
+    <tr>
+        <td><strong>IS A: </strong></td>
+        <td>Product category</td>
+    </tr>
+    <tr>
+        <td><strong>THAT: </strong></td>
+        <td>key benefit, reason to buy</td>
+    </tr>
+    <tr>
+        <td><strong>UNLIKE: </strong></td>
+        <td>Primary competitive alternative</td>
+    </tr>
+</table>
+
+---
+
+_Example:_ For the business user who needs to be productive in the office and on the go, the Surface is a convertible tablet that is easy to carry and gives you full computing productivity no matter where you are.
+Unlike laptops, Surface serves your on-the-go needs without having to carry an extra device.

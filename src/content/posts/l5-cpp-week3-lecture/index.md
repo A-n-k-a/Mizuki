@@ -34,7 +34,7 @@ pubDate: 2025-10-13
 uint32_t val;
 ```
 - Allocates memory equal to the size of a `uint32` (4 bytes), and then tells the compiler to treat <span style="color: red">val</span> as reading the value at the allocated address.
-- 分配与 uint32（4 字节）大小相等的内存，然后告诉编译器将 val 视为读取分配地址的值。
+- 分配与 uint32（4 字节）大小相等的内存，然后告诉编译器将 `val` 视为读取分配地址的值。
 - As we saw last week you can find the address by writing `&val`.
 - 正如上周我们所见，你可以通过写入`&val`来找到地址。
 
@@ -50,7 +50,7 @@ uint32_t val;
 - You can also directly declare variables to hold addresses, but this must be done carefully.
 - 更常见的是，您也可以直接声明变量来存储地址，但必须谨慎操作。
 - `uint32_t *pointer;` creates a variable that will hold an <span style="color: red">address</span> and tells C that when this address is used, its content should be interpreted as a `uint32`.
-- 创建一个将存储地址的变量，并告诉 C 语言当使用此地址时，其内容应被解释为 uint32。
+- 创建一个将存储地址的变量，并告诉 C 语言当使用此地址时，其内容应被解释为 `uint32`。
 
 ---
 
@@ -194,7 +194,7 @@ delete p;
 ---
 
 Example:
-```
+```c
 int x = 31;// x declared and assigned 31
 int *p = &x; // p hold the address of x
 int &y = *p; // Address of y now points to x!
@@ -204,6 +204,14 @@ x = 51; // Both *p and y are now 51!
 ```
 
 ## Structured data
+结构化数据
+> [!TIP]
+> member properties: 成员属性(attribution)  
+> struct: 结构体（它是类的原型/prototype）  
+> 结构体中一般不写功能  
+>   
+> 思考：怎样定义一个类？
+
 ```c
 typedef struct {
     char name[20];
@@ -252,18 +260,18 @@ int main() {
 
 ---
 
-- Be aware that in C a struct is a value type!
+- Be aware that in C a struct is a <span style="color: red">value</span> type!
 - 请注意，在 C 语言中，结构体是一个值类型！
 - So writing:
     `student mike = john;`
-- Will allocate 24 bytes of memory for mike, then copy the 24 bytes of data from john into it.
+- Will allocate 24 bytes of memory for <span style="color: red">mike</span>, then copy the 24 bytes of data from <span style="color: red">john</span> into it.
 - 将为 mike 分配 24 字节的内存，然后将 john 中的 24 字节数据复制到其中。
 - This is not the same as Python or Java, in which you would need to explicitly call a copy function to do this.
 - 这与 Python 或 Java 不同，在 Python 或 Java 中，你需要显式调用一个复制函数来完成这个操作。
 - Be careful about writing this type of code. It is easy to accidentally write code that wastes time or memory by making unintended copies.
 - 编写此类代码时要小心。很容易不小心编写出浪费时间和内存的代码，造成意外的复制。
-- It may also be confusing that updating mike will now have no effect on john.
-- 它也可能让人困惑，更新 mike 现在对 john 没有任何影响。
+- It may also be confusing that updating `mike` will now <span style="color: red">have no effect on</span> `john`.
+- 它也可能让人困惑，更新 `mike` 现在对 `john` 没有任何影响。
 
 ## Structured data and pointers
 - Let us now think about an example function that will show why pointers and structured data together are useful.
@@ -281,7 +289,7 @@ student enrolStudent(char *name) {
 ```
 > <span style="color: red">Why not use</span> `char name[20]`?
 
-- When declaring a string parameter ,we declare it as a pointer to avoid giving a size.
+- When declaring a string parameter, we declare it as a pointer to avoid giving a size.
 - 在声明字符串参数时，我们将其声明为一个指针以避免指定大小。
 - We cannot insist the input string is allocated 20 characters of memory (this does not mean it is 20 characters long). It could be shorter as long as it is null-terminated.
 - 我们不能坚持输入字符串分配了 20 个字符的内存（这并不意味着它有 20 个字符长）。只要它是空终止的，它可以更短。
@@ -310,7 +318,8 @@ student enrolStudent(char *name) {
 - 它可能会导致结构体过大时性能下降，甚至使系统栈内存耗尽。
 
 > [!TIP]
-> Thinking question: How to fix this problem?
+> Thinking question: How to fix this problem?  
+> - Use reference
 
 ### `enrolStudent` attempt 2
 ```c
@@ -328,6 +337,7 @@ student *enrolStudent(char *name) {
 - 使用指针代替学生。在创建学生结构体后，我们获取其地址并返回。
 - This is in principle a good idea but this implementation is fatally flawed! and Why?
 - 这个想法在原则上是个好主意，但这个实现存在致命缺陷！为什么？
+    - 这个方法执行完毕后，内存释放，指针指向的值将被清空
 
 ### `enrolStudent` attempt 3
 ```c
@@ -342,6 +352,9 @@ student *enrolStudent(char *name) {
 - 这次我们使用手动内存分配（称为动态分配）来为 `student` 结构体分配内存。
 - This will work. Memory allocated by dynamic allocation is not subject to scoping, so it is not discarded when the function ends. So the calling program can use that `student`.
 - 这将有效。动态分配的内存不受作用域限制，因此在函数结束时不会被丢弃。因此，调用程序可以使用 `student`。
+
+> [!TIP]
+> 用 `malloc` 分配的内存不会自动释放，直到执行 `free()` 方法
 
 ---
 
@@ -363,13 +376,13 @@ student *enrolStudent(const char *name) {
 ```
 ### Const parameters
 - When passing an address to a function, declaring the parameter type as <span style="color: red">const</span> serves as a promise that the function will not change the value stored at that address.
-- 当向函数传递地址时，将参数类型声明为 const 表示函数将不会更改该地址存储的值。
+- 当向函数传递地址时，将参数类型声明为 `const` 表示函数将不会更改该地址存储的值。
 - In <span style="color: red">enrolStudent</span> we do not need to change <span style="color: red">name</span>, but it is passed by address anyway because it is an array and they are intrinsically address based.
-- 在 `enrolStudent` 函数中，我们不需要更改姓名，但无论如何它都是通过地址传递的，因为它是数组，它们本质上是基于地址的。
+- 在 `enrolStudent` 函数中，我们不需要更改 `name` ，但无论如何它都是通过地址传递的，因为它是数组，它们本质上是基于地址的。
 - The promise is enforced by type checking. <span style="color: red">const char *</span> is considered a different type to <span style="color: red">char *</span> and write operations cannot be performed on it. It can also only be passed to other functions that input <span style="color: red">const char *</span> (in other words, that also promise not to change the value)
 - 承诺是通过类型检查来强制执行的。`const char *` 被认为是一种与 `char *` 不同的类型，并且不能对其执行写操作。它也只能传递给需要输入 `const char *` 的其他函数（换句话说，它们也承诺不会更改值）
 - Whenever you write a function which obtains a value by address but doesn’t change it, declare the parameter <span style="color: red">const</span> to ensure it can work with <span style="color: red">const</span> values you may obtain from elsewhere.
-- 每次你编写一个通过地址获取值但不更改它的函数时，请将参数声明为 const，以确保它可以与从其他地方获得的 const 值一起工作。
+- 每次你编写一个通过地址获取值但不更改它的函数时，请将参数声明为 `const`，以确保它可以与从其他地方获得的 `const` 值一起工作。
 
 ### `enrolStudent` alternative method
 ```c
