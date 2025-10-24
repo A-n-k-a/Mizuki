@@ -223,7 +223,8 @@ FidgetSpinner* FidgetSpinner::getStoredAt(int idx) {
   
 int main() {  
     // FidgetSpinner *FidgetSpinners[5];  
-    // Create 5 spinners (they will automatically register)    FidgetSpinner *s1 = new FidgetSpinner("Reference Red", 3);  
+    // Create 5 spinners (they will automatically register)    
+    FidgetSpinner *s1 = new FidgetSpinner("Reference Red", 3);  
     FidgetSpinner *s2 = new FidgetSpinner("Blue Bolt", 4);  
     FidgetSpinner *s3 = new FidgetSpinner("Green Glide", 5);  
     FidgetSpinner *s4 = new FidgetSpinner("Yellow Yaw", 6);  
