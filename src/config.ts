@@ -14,7 +14,6 @@ import type {
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
-
 // 移除i18n导入以避免循环依赖
 
 // 定义站点语言
@@ -36,17 +35,49 @@ export const siteConfig: SiteConfig = {
 	lang: SITE_LANG,
 
 	themeColor: {
-		hue: 305, // 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
+		hue: 35, // 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
 		fixed: false, // 对访问者隐藏主题色选择器
 	},
 
-	
+	// 特色页面开关配置(关闭不在使用的页面有助于提升SEO,关闭后直接在顶部导航删除对应的页面就行)
+	featurePages: {
+		anime: true, // 番剧页面开关
+		diary: true, // 日记页面开关
+		friends: true, // 友链页面开关
+		projects: true, // 项目页面开关
+		skills: true, // 技能页面开关
+		timeline: true, // 时间线页面开关
+		albums: true, // 相册页面开关
+	},
+
+	// 顶栏标题配置
+	navbarTitle: {
+		// 顶栏标题文本
+		text: "MizukiUI",
+		// 顶栏标题图标路径，默认使用 public/assets/home/home.png
+		icon: "assets/home/home.png",
+	},
+
 	bangumi: {
 		userId: "898470", // 在此处设置你的Bangumi用户ID，可以设置为 "sai" 测试
 	},
 
 	anime: {
 		mode: "bangumi", // 番剧页面模式："bangumi" 使用Bangumi API，"local" 使用本地配置
+	},
+
+	// 文章列表布局配置
+	postListLayout: {
+		// 默认布局模式："list" 列表模式（单列布局），"grid" 网格模式（双列布局）
+		defaultMode: "grid",
+		// 是否允许用户切换布局
+		allowSwitch: true,
+	},
+
+	// 标签样式配置
+	tagStyle: {
+		// 是否使用新样式（悬停高亮样式）还是旧样式（外框常亮样式）
+		useNewStyle: false,
 	},
 
 	banner: {
@@ -82,6 +113,12 @@ export const siteConfig: SiteConfig = {
 			enable: true, // 为 true 时：为多张图片启用轮播。为 false 时：从数组中随机显示一张图片
 
 			interval: 15, // 轮播间隔时间（秒），默认为1.5
+		},
+
+		waves: {
+			enable: true, // 是否启用水波纹效果(这个功能比较吃性能)
+			performanceMode: false, // 性能模式：减少动画复杂度(性能提升40%)
+			mobileDisable: false, // 移动端禁用
 		},
 
 		// PicFlow API支持(智能图片API)
@@ -122,6 +159,13 @@ export const siteConfig: SiteConfig = {
 		navbar: {
 			transparentMode: "semifull", // 导航栏透明模式："semi" 半透明加圆角，"full" 完全透明，"semifull" 动态透明
 		},
+
+		// 整体布局方案切换按钮显示设置（默认："desktop"）
+		// "off" = 不显示
+		// "mobile" = 仅在移动端显示
+		// "desktop" = 仅在桌面端显示
+		// "both" = 在所有设备上显示
+		showModeSwitchOnMobile: "desktop",
 	},
 	toc: {
 		enable: true, // 启用目录功能
@@ -261,6 +305,10 @@ export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/91747375-50FF-4E10-9946-754B8612AFBA_1_105_c.jpeg", // 相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录
 	name: "Anka",
 	bio: "Beautiful Word, Beautiful World.",
+	typewriter: {
+		enable: true, // 启用个人简介打字机效果
+		speed: 80, // 打字速度（毫秒）
+	},
 	links: [
 		{
 			name: "Bilibli",
@@ -276,6 +324,11 @@ export const profileConfig: ProfileConfig = {
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/A-n-k-a",
+		},
+		{
+			name: "Codeberg",
+			icon: "simple-icons:codeberg",
+			url: "https://codeberg.org",
 		},
 		{
 			name: "Discord",
