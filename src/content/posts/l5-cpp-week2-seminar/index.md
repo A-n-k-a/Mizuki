@@ -136,11 +136,11 @@ int main() {
     printf("But also, B is %i and the first character of aString is %c.\n",addressOfB[0], *（aString+3));
 }
 ```
-It might seem that this program should not work, but it does. Why does the second _printf_ line work? _(Look up in the slides what the \[] operator does, and what the \* operator does.)_  
+It might seem that this program should not work, but it does. Why does the second `printf` line work? _(Look up in the slides what the \[] operator does, and what the \* operator does.)_  
 
 _The “int \*” is a integrated statement ,it means a pointer type variable._  
 
-_\*aString means the first character in the string because cant handle the string as a whole part_  
+_\*aString means the first character in the string because can't handle the string as a whole part_  
 
 ---
 8. Create a C++ project. Copy and paste the code from exercise 1 above. Run it to confirm that it is still valid in C++. Then modify it to use the C++ "reference" syntax instead of the C "pointer" syntax.  
