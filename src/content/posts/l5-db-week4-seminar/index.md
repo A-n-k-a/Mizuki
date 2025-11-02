@@ -1,5 +1,5 @@
 ---
-title: "Databases Week3 Seminar"
+title: "Databases Week4 Seminar"
 published: 2025-10-23
 pinned: false
 description: "XPath/XSLT"
