@@ -94,7 +94,7 @@ Formative usability evaluation is conducted <span style="color: green"><strong>d
     - **Task Analysis**: A detailed analysis of user tasks and interactions is conducted to identify bottlenecks and areas for improvement in the system.
 
 ## GOMS
-（视频）
+<video src="/l5-hci-week5-lecture-assets/YTDown.com_YouTube_GOMS-model-in-HCI_Media_Iq0TGM7cxfE_001_720p(1).mp4" type="video/mp4" controls="controls" preload="meta"></video>
 
 - GOMS, which stands for Goals, Operators, Methods, and Selection rules, is a model used for analyzing the usability of a system by breaking down user tasks into their fundamental components.
 - **Goals**: Tasks are defined in terms of the <span style="color: green">overall objectives</span> the user wants to achieve.
@@ -157,15 +157,14 @@ execute = TK + TP + TH + TD +TM + TR
 $$
 
 ## Cognitive Walkthroughs
-（视频）
+<video src="/l5-hci-week5-lecture-assets/YTDown.com_YouTube_How-to-Conduct-a-Cognitive-Walktrough_Media_2-57etXWx5Q_003_360p.mp4" type="video/mp4" controls="controls" preload="meta"></video>
 
-  
 **Cognitive Walkthrough** is a usability evaluation method that involves evaluators <span style="color: green"><strong>simulating the thought processes of users</strong></span> as they approach and complete tasks in a system.  
 The evaluators systematically step through the tasks a user might perform (<span style="color: green"><strong>putting themselves in users shoes</strong></span>), considering the actions, feedback, and mental processes required at each step. This method is particularly useful in identifying potential usability issues, especially for users <span style="color: green"><strong>who are new to the system</strong></span>.  
 **Cognitive Walkthroughs provide valuable insights into how users might approach tasks and where they might face challenges**
 
 ### How to conduct Cognitive Walkthrouh
-（视频）
+<video src="/l5-hci-week5-lecture-assets/YTDown.com_YouTube_Sample-Cognitive-Walkthrough_Media_Edqjao4mmxM_002_360p(1).mp4" type="video/mp4" controls="controls" preload="meta"></video>
 
 ### Process of Cognitive Walkthrough:
 - Consider the task "Create a new account" on a website.
@@ -189,7 +188,7 @@ The evaluators systematically step through the tasks a user might perform (<span
     - **Step 6**: Complete the form, submit it, and see if there's a clear confirmation message. Ensure users know that their registration was successful
 
 ### Heuristic Evaluation
-（视频）
+<video src="/l5-hci-week5-lecture-assets/YTDown.com_YouTube_Heuristic-Evaluation_Media_sa5lswRd7Q8_002_360p.mp4" type="video/mp4" controls="controls" preload="meta"></video>
 
 This method involves identifying usability issues by assessing them against established principles that make interfaces user-friendly.
 
