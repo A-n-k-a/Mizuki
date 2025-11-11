@@ -136,6 +136,11 @@ Advantages: Avoids the pressure and inaccuracy of direct time estimation, focusi
 
 ![](Pasted_image_20251020092146.png)
 
+> 咖啡表示任务非常简单  
+> 0表示Feature已完成开发但未发布  
+> 0.5表示某Feature过于巨大，需要分期完成  
+> ?表示Uncertainty
+
 ## Velocity
 - "The sum of story points completed by the team within one iteration cycle." <br>"团队在一个迭代周期内完成的用户故事点总和。"
 - Used to predict future iteration delivery capacity and assist in release planning. <br>用于预测未来迭代的交付能力和协助发布规划。
