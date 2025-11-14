@@ -228,6 +228,7 @@ export type AnnouncementConfig = {
 
 export type MusicPlayerConfig = {
 	enable: boolean; // 是否启用音乐播放器功能
+	id: string; // 歌单ID
 };
 
 export type FooterConfig = {

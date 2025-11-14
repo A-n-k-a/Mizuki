@@ -372,6 +372,7 @@ export const announcementConfig: AnnouncementConfig = {
 
 export const musicPlayerConfig: MusicPlayerConfig = {
 	enable: true, // 启用音乐播放器功能
+	id: "5172109645",
 };
 
 export const footerConfig: FooterConfig = {
