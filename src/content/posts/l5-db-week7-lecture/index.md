@@ -3,7 +3,7 @@ title: "Databases Week7 Lecture"
 published: 2025-11-10
 pinned: false
 description: "Modelling and Loading"
-tags: []
+tags: [SQL]
 category: "Databases"
 licenseName: "MIT"
 author: "🐦‍🔥不死鸟Anka"
@@ -260,6 +260,14 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 ```
+
+> [!NOTE]
+> 如果设置了 `SET GLOBAL local_infile = 1;` 仍然报错  
+> `ERROR 2068 (HY000): LOAD DATA LOCAL INFILE file request rejected due to restrictions on access.`  
+> 参考解决方案（命令行）：[ERROR 2068 (HY000): LOAD DATA LOCAL INFILE file request rejected due to restrictions on access.-CSDN博客](https://blog.csdn.net/JayneLee/article/details/136045454)  
+> 省流：`mysql -h localhost -u root --local-infile=1 -p`  
+> 参考解决方案（MySQLWorkbench）：[MYSQL 8.0 WORKBENCH使用LOAD DATA LOCAL INFILE报错解决方案_load data local infile说找不到文件路径-CSDN博客](https://blog.csdn.net/weixin_44296768/article/details/122568056)  
+> 省流：右键数据库连接，选择【Edit Connection...】，里边有一个Advanced选项卡，点进去在Others框里最后一行添加`OPT_LOCAL_INFILE=1
 
 ### Validate The Data
 ```sql
