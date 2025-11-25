@@ -25,155 +25,67 @@ if (fs.existsSync(envPath)) {
       process.env[key] = value;
     }
   });
-  console.log('✅ 已加载 .env 配置文件\n');
+  console.log('Loaded .env configuration file\n');
 }
 
 // 从环境变量读取配置
 const ENABLE_CONTENT_SYNC = process.env.ENABLE_CONTENT_SYNC !== 'false'; // 默认启用
 const CONTENT_REPO_URL = process.env.CONTENT_REPO_URL || '';
 const CONTENT_DIR = process.env.CONTENT_DIR || path.join(rootDir, 'content');
-const USE_SUBMODULE = process.env.USE_SUBMODULE === 'true';
 
-console.log('🔄 开始同步内容...\n');
+console.log('Starting content synchronization...\n');
 
-// 检查是否启用内容同步
+// 检查是否启用内容分离
 if (!ENABLE_CONTENT_SYNC) {
-  console.log('⏭️  内容同步已禁用 (ENABLE_CONTENT_SYNC=false)');
-  console.log('💡 提示: 将使用本地内容,不会从远程仓库同步');
-  console.log('    如需启用内容分离功能,请在 .env 中设置:');
-  console.log('    ENABLE_CONTENT_SYNC=true');
-  console.log('    CONTENT_REPO_URL=<your-repo-url>\n');
+  console.log('Content separation is disabled (ENABLE_CONTENT_SYNC=false)');
+  console.log('Tip: Local content will be used, will not sync from remote repository');
+  console.log('     To enable content separation feature, set in .env:');
+  console.log('     ENABLE_CONTENT_SYNC=true');
+  console.log('     CONTENT_REPO_URL=<your-repo-url>\n');
   process.exit(0);
-}
-
-// 检查 .gitignore 是否会阻止 submodule
-function checkGitignoreConflict() {
-  const gitignorePath = path.join(rootDir, '.gitignore');
-  if (fs.existsSync(gitignorePath)) {
-    const gitignoreContent = fs.readFileSync(gitignorePath, 'utf-8');
-    // 检查是否有未注释的 content/ 行
-    const lines = gitignoreContent.split('\n');
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (trimmed === 'content/' || trimmed === 'content') {
-        return true;
-      }
-    }
-  }
-  return false;
 }
 
 // 检查内容目录是否存在
 if (!fs.existsSync(CONTENT_DIR)) {
-  console.log(`📁 内容目录不存在: ${CONTENT_DIR}`);
+  console.log(`Content directory does not exist: ${CONTENT_DIR}`);
+  console.log('Using independent repository mode');
   
-  if (USE_SUBMODULE) {
-    console.log('📦 使用 Git Submodule 模式');
-    
-    if (!CONTENT_REPO_URL) {
-      console.error('❌ 错误: 未设置 CONTENT_REPO_URL 环境变量');
-      process.exit(1);
-    }
-    
-    // 检查 .gitignore 冲突
-    if (checkGitignoreConflict()) {
-      console.warn('⚠️  警告: .gitignore 中的 content/ 规则会阻止 submodule');
-      console.log('💡 解决方案: 使用独立仓库模式或注释掉 .gitignore 中的 content/ 行');
-      console.log('🔄 切换到独立仓库模式...\n');
-      
-      // 降级到独立仓库模式
-      try {
-        console.log(`📥 克隆内容仓库: ${CONTENT_REPO_URL}`);
-        execSync(`git clone ${CONTENT_REPO_URL} ${CONTENT_DIR}`, { 
-          stdio: 'inherit',
-          cwd: rootDir
-        });
-        console.log('✅ 内容仓库克隆成功');
-      } catch (error) {
-        console.error('❌ 克隆失败:', error.message);
-        process.exit(1);
-      }
-    } else {
-      try {
-        console.log(`📥 初始化 submodule: ${CONTENT_REPO_URL}`);
-        execSync(`git submodule add ${CONTENT_REPO_URL} content`, { 
-          stdio: 'inherit',
-          cwd: rootDir
-        });
-        execSync('git submodule update --init --recursive', { 
-          stdio: 'inherit',
-          cwd: rootDir
-        });
-        console.log('✅ Submodule 初始化成功');
-      } catch (error) {
-        console.error('❌ Submodule 初始化失败:', error.message);
-        console.log('🔄 尝试使用独立仓库模式...\n');
-        
-        // 如果 submodule 失败,尝试普通克隆
-        try {
-          execSync(`git clone ${CONTENT_REPO_URL} ${CONTENT_DIR}`, { 
-            stdio: 'inherit',
-            cwd: rootDir
-          });
-          console.log('✅ 内容仓库克隆成功');
-        } catch (cloneError) {
-          console.error('❌ 克隆也失败:', cloneError.message);
-          process.exit(1);
-        }
-      }
-    }
-  } else {
-    console.log('📦 使用独立仓库模式');
-    
-    if (!CONTENT_REPO_URL) {
-      console.warn('⚠️  警告: 未设置 CONTENT_REPO_URL,将使用本地内容');
-      console.log('💡 提示: 请设置 CONTENT_REPO_URL 环境变量或手动创建 content 目录');
-      process.exit(0);
-    }
-    
-    try {
-      console.log(`📥 克隆内容仓库: ${CONTENT_REPO_URL}`);
-      execSync(`git clone ${CONTENT_REPO_URL} ${CONTENT_DIR}`, { 
-        stdio: 'inherit',
-        cwd: rootDir
-      });
-      console.log('✅ 内容仓库克隆成功');
-    } catch (error) {
-      console.error('❌ 克隆失败:', error.message);
-      process.exit(1);
-    }
+  if (!CONTENT_REPO_URL) {
+    console.warn('Warning: CONTENT_REPO_URL not set, will use local content');
+    console.log('Tip: Please set CONTENT_REPO_URL environment variable or manually create content directory');
+    process.exit(0);
+  }
+  
+  try {
+    console.log(`Cloning content repository: ${CONTENT_REPO_URL}`);
+    execSync(`git clone --depth 1 ${CONTENT_REPO_URL} ${CONTENT_DIR}`, { 
+      stdio: 'inherit',
+      cwd: rootDir
+    });
+    console.log('Content repository cloned successfully');
+  } catch (error) {
+    console.error('Clone failed:', error.message);
+    process.exit(1);
   }
 } else {
-  console.log(`📁 内容目录已存在: ${CONTENT_DIR}`);
+  console.log(`Content directory already exists: ${CONTENT_DIR}`);
   
-  // 如果是 submodule,更新它
-  if (USE_SUBMODULE || fs.existsSync(path.join(CONTENT_DIR, '.git'))) {
+  if (fs.existsSync(path.join(CONTENT_DIR, '.git'))) {
     try {
-      console.log('🔄 更新 submodule...');
-      execSync('git submodule update --remote --merge', { 
-        stdio: 'inherit',
-        cwd: rootDir
-      });
-      console.log('✅ Submodule 更新成功');
-    } catch (error) {
-      console.warn('⚠️  Submodule 更新失败:', error.message);
-    }
-  } else if (fs.existsSync(path.join(CONTENT_DIR, '.git'))) {
-    try {
-      console.log('🔄 拉取最新内容...');
-      execSync('git pull', { 
+      console.log('Pulling latest content...');
+      execSync('git pull --allow-unrelated-histories', { 
         stdio: 'inherit',
         cwd: CONTENT_DIR
       });
-      console.log('✅ 内容更新成功');
+      console.log('Content updated successfully');
     } catch (error) {
-      console.warn('⚠️  内容更新失败:', error.message);
+      console.warn('Content update failed:', error.message);
     }
   }
 }
 
 // 创建符号链接或复制内容
-console.log('\n📂 设置内容链接...');
+console.log('\nSetting up content links...');
 
 const contentMappings = [
   { src: 'posts', dest: 'src/content/posts' },
@@ -187,14 +99,14 @@ for (const mapping of contentMappings) {
   const destPath = path.join(rootDir, mapping.dest);
   
   if (!fs.existsSync(srcPath)) {
-    console.log(`⏭️  跳过不存在的源: ${mapping.src}`);
+    console.log(`Skipping non-existent source: ${mapping.src}`);
     continue;
   }
   
   // 如果目标已存在且不是符号链接,备份它
   if (fs.existsSync(destPath) && !fs.lstatSync(destPath).isSymbolicLink()) {
     const backupPath = `${destPath}.backup`;
-    console.log(`💾 备份现有内容: ${mapping.dest} -> ${mapping.dest}.backup`);
+    console.log(`Backing up existing content: ${mapping.dest} -> ${mapping.dest}.backup`);
     if (fs.existsSync(backupPath)) {
       fs.rmSync(backupPath, { recursive: true, force: true });
     }
@@ -210,14 +122,14 @@ for (const mapping of contentMappings) {
   try {
     const relPath = path.relative(path.dirname(destPath), srcPath);
     fs.symlinkSync(relPath, destPath, 'junction');
-    console.log(`🔗 创建符号链接: ${mapping.dest} -> ${mapping.src}`);
+    console.log(`Created symbolic link: ${mapping.dest} -> ${mapping.src}`);
   } catch (error) {
-    console.log(`📋 复制内容: ${mapping.src} -> ${mapping.dest}`);
+    console.log(`Copying content: ${mapping.src} -> ${mapping.dest}`);
     copyRecursive(srcPath, destPath);
   }
 }
 
-console.log('\n✅ 内容同步完成!\n');
+console.log('\nContent synchronization completed\n');
 
 // 递归复制函数
 function copyRecursive(src, dest) {
