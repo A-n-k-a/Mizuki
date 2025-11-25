@@ -149,6 +149,10 @@ Object-Oriented Programming (OOP) is a paradigm that organizes software design a
 #### 🔹 1. Encapsulation
 **Encapsulation** means **wrapping data (variables)** and **functions (methods)** into a single unit, typically a class.  
 It also allows **data hiding**, meaning internal details of the class are protected from external access.  
+
+> [!NOTE]
+> 注意：封装是将具有相似结构和功能（或共同工作）的一系列内容（attribute、function等）聚合为一个类
+
 Example:
 ```cpp
 #include <iostream>

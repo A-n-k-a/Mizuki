@@ -273,6 +273,9 @@ int main() {
 - It may also be confusing that updating `mike` will now <span style="color: red">have no effect on</span> `john`.
 - 它也可能让人困惑，更新 `mike` 现在对 `john` 没有任何影响。
 
+> [!NOTE]
+> 结构体也是一种封装
+
 ## Structured data and pointers
 - Let us now think about an example function that will show why pointers and structured data together are useful.
 - 现在让我们考虑一个示例函数，它将展示为什么指针和结构化数据结合使用是有用的。

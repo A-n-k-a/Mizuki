@@ -156,7 +156,7 @@ common diagrammatic representations:
 - “A morning routine—Wake Up → Get Ready → Have Breakfast → Leave House. Each step depends on finishing the previous one.”
 
 ## STN
-（视频）
+<video src="/l5-hci-week8-lecture-assets/State_Transition_Diagrams.mp4" type="video/mp4" controls="controls" preload="meta"></video>
 
 ### State Transition Networks
 A <span style="color: blue"><i>state transition network</i></span> represents how states can be changed by actions.  
@@ -188,7 +188,7 @@ Text styles:
 ![](Pasted_image_20251118090340.png)
 
 ## Petri nets
-（视频）
+<video src="/l5-hci-week8-lecture-assets/Petri_nets.mp4" type="video/mp4" controls="controls" preload="meta"></video>
 
 Is a kind of graphical modeling tool that we can use for modeling and simulation of physical system. In the context of Petri nets consist of places, transitions, and arcs that represent states, events, and transitions between states, respectively.
 Notation: 
