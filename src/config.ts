@@ -333,7 +333,8 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/91747375-50FF-4E10-9946-754B8612AFBA_1_105_c.jpeg", // 相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录
 	name: "Anka",
-	bio: "Beautiful Word, Beautiful World.",
+	bio: "I opened myself to the gentle indifference of the world.", // 个人简介
+	// 历史：Beautiful Word, Beautiful World.
 	typewriter: {
 		enable: true, // 启用个人简介打字机效果
 		speed: 80, // 打字速度（毫秒）
