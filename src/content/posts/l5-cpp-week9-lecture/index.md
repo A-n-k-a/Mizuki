@@ -94,8 +94,8 @@ ostream& operator<< (ostream& os, const string& str)
 > parameter: 形参
 
 > [!NOTE]
-> 双目运算符  
-> 三目运算符：`?`
+> [双目运算符](https://blog.csdn.net/YoyoHuzeyou/article/details/132281592)  
+> [三目运算符](https://blog.csdn.net/weixin_44259499/article/details/140224379)&emsp;`condition ? expression1 : expression2;`
 
 ---
 
