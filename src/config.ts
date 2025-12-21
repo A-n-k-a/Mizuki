@@ -358,7 +358,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "Codeberg",
 			icon: "simple-icons:codeberg",
-			url: "https://codeberg.org",
+			url: "https://codeberg.org/Anka",
 		},
 		{
 			name: "Discord",
