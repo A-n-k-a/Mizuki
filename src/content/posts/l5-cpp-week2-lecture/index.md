@@ -194,6 +194,13 @@ int main() {
     printf(“%i”,b);
 }
 ```
+:::caution
+We can **NOT** do this in C, the teacher [tricked](#teacher's-trick) us!
+![](0.jpeg)
+![](1.jpeg)
+![](2.jpeg)
+:::
+
 Try to figure out the result:
 ```cpp
 #include <iostream>
@@ -227,6 +234,7 @@ add again without pointer the result is 3
  the intermediate variable is 4
 add again with & the result is 4
 ```
+<a name="teacher's-trick"></a>
 C language can’t accept the function arguments like `void addOneTo3(int &x);`  
 > Sorry, I wrote it in a C++ environment
 
