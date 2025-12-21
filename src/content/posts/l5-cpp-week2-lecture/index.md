@@ -46,7 +46,7 @@ int TestFunction(int x){
 }
 ```
 ### Passing Parameters in C/C++ Functions
-形式参数：parameter
+形式参数：parameter  
 实际参数：argument
 - In C and C++ there are two methods of passing parameters to a function.
     - Pass by value:
@@ -104,7 +104,7 @@ This will display:
     - ➢The location in memory of the variable (the <span style="color: red">address</span> or <span style="color: red">reference</span>)
 - To pass a variable to a function, one of these <span style="color: #8B0000">must be copied</span> to be given to the function. (Making a copy of some kind is inevitable because there must be a <span style="color: red">fixed location</span> in memory the function reads to find out what to work on.)
 ## Value and reference
-explicit: 清晰的；显式的
+explicit: 清晰的；显式的  
 implicit: 隐晦的；隐式的
 - The process of using value and reference types is hidden in Java, but is <span style="color: #8B0000">explicit</span> in C (and in C++ to a lesser extent)
 - You have already used this when you call `scanf` in C. 
