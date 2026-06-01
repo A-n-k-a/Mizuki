@@ -50,7 +50,7 @@ export default defineConfig({
 	integrations: [
 		oddmisc({
 			umami: {
-				shareUrl: false,
+				shareUrl: "https://umai.anka1.top/share/0bE4gxegPQcIkAOw",
 			},
 		}),
 		swup({
