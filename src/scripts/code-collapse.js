@@ -228,7 +228,9 @@ class CodeBlockCollapser {
 
 	observePageChanges() {
 		// 如果正在主题切换，不要重新连接
-		if (this.isThemeChanging) return;
+		if (this.isThemeChanging) {
+			return;
+		}
 
 		// 断开现有的 observer
 		if (this.observer) {
@@ -239,50 +241,43 @@ class CodeBlockCollapser {
 
 		this.observer = new MutationObserver((mutations) => {
 			// 如果正在主题切换，忽略所有变化
-			if (this.isThemeChanging) return;
+			if (this.isThemeChanging) {
+				return;
+			}
 
 			let shouldReinit = false;
 
+			// 外层循环：遍历所有变动
 			for (const mutation of mutations) {
-				if (mutation.type === "childList") {
+				if (
+					mutation.type === "childList" &&
+					mutation.addedNodes.length > 0
+				) {
+					// 内层循环：遍历新增节点
 					for (const node of mutation.addedNodes) {
+						// 只检查元素节点 (nodeType 1)
 						if (node.nodeType === Node.ELEMENT_NODE) {
-							// 只检查添加的节点本身或其直接子节点
 							if (
-								node.classList &&
-								node.classList.contains("expressive-code")
+								node.classList.contains("expressive-code") ||
+								(node.getElementsByClassName &&
+									node.getElementsByClassName(
+										"expressive-code",
+									).length > 0)
 							) {
 								shouldReinit = true;
 								break;
 							}
-							// 避免深度查询，只检查一层
-							if (node.children && node.children.length > 0) {
-								for (
-									let i = 0;
-									i < Math.min(node.children.length, 10);
-									i++
-								) {
-									if (
-										node.children[i].classList &&
-										node.children[i].classList.contains(
-											"expressive-code",
-										)
-									) {
-										shouldReinit = true;
-										break;
-									}
-								}
-							}
 						}
-						if (shouldReinit) break;
 					}
 				}
-				if (shouldReinit) break;
+				if (shouldReinit) {
+					break;
+				}
 			}
 
 			if (shouldReinit) {
 				clearTimeout(debounceTimer);
-				debounceTimer = setTimeout(() => this.setupCodeBlocks(), 150);
+				debounceTimer = setTimeout(() => this.setupCodeBlocks(), 30);
 			}
 		});
 
