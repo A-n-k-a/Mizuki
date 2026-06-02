@@ -13,6 +13,13 @@
   var activeConfigKey = '';
   var loadingConfigKey = '';
   var lastContentHeight = 500;
+  var lastReportedHeight = 0;
+  var measureRaf = 0;
+  var measureTimer = null;
+  var mutationObserver = null;
+  var resizeObserver = null;
+  var animationWatchUntil = 0;
+  var animationHeadroom = 10;
 
   var menuActions = {
     home: function() { parent.postMessage({ type: 'l2d-action', action: 'home' }, '*'); },
@@ -20,19 +27,113 @@
     sleep: function(w) { w.sleep(); },
   };
 
-  function notifyLoaded() {
+  function hasVisibleColor(value) {
+    return value && value !== 'transparent' && value !== 'rgba(0, 0, 0, 0)';
+  }
+
+  function measureContentHeight() {
+    var minTop = Infinity;
     var maxBottom = 0;
     document.querySelectorAll('*').forEach(function(el) {
-      if (el.getBoundingClientRect) {
-        var r = el.getBoundingClientRect();
-        if (r.width > 0 && r.height > 0 && r.bottom > maxBottom) {
-          maxBottom = r.bottom;
-        }
+      var tagName = el.tagName ? el.tagName.toLowerCase() : '';
+      if (
+        !el.getBoundingClientRect ||
+        ['html', 'body', 'head', 'script', 'style', 'link', 'meta'].indexOf(tagName) !== -1
+      ) {
+        return;
       }
+
+      var style = window.getComputedStyle(el);
+      if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) {
+        return;
+      }
+
+      var r = el.getBoundingClientRect();
+      if (r.width <= 0 || r.height <= 0) return;
+
+      var isViewportContainer =
+        r.top <= 0 &&
+        r.left <= 0 &&
+        r.width >= window.innerWidth &&
+        r.height >= window.innerHeight;
+      var hasOwnText = Array.prototype.some.call(el.childNodes, function(node) {
+        return node.nodeType === Node.TEXT_NODE && Boolean(node.textContent && node.textContent.trim());
+      });
+      var hasVisibleBox =
+        hasVisibleColor(style.backgroundColor) ||
+        style.backgroundImage !== 'none' ||
+        style.boxShadow !== 'none' ||
+        parseFloat(style.borderTopWidth) > 0 ||
+        parseFloat(style.borderRightWidth) > 0 ||
+        parseFloat(style.borderBottomWidth) > 0 ||
+        parseFloat(style.borderLeftWidth) > 0;
+      var hasOwnVisibleSurface =
+        tagName === 'canvas' ||
+        tagName === 'button' ||
+        tagName === 'a' ||
+        tagName === 'img' ||
+        hasOwnText ||
+        hasVisibleBox;
+
+      if (isViewportContainer || !hasOwnVisibleSurface) return;
+
+      minTop = Math.min(minTop, r.top);
+      maxBottom = Math.max(maxBottom, r.bottom);
     });
 
-    lastContentHeight = Math.ceil(maxBottom) || lastContentHeight || 500;
+    return maxBottom > 0 && minTop < Infinity
+      ? Math.ceil(maxBottom - minTop + animationHeadroom)
+      : lastContentHeight || 500;
+  }
+
+  function notifyLoaded(force) {
+    lastContentHeight = measureContentHeight();
+    if (!force && Math.abs(lastContentHeight - lastReportedHeight) <= 1) return;
+    lastReportedHeight = lastContentHeight;
     parent.postMessage({ type: 'l2d-loaded', contentHeight: lastContentHeight }, '*');
+  }
+
+  function scheduleNotify(force) {
+    if (measureRaf) return;
+    measureRaf = requestAnimationFrame(function() {
+      measureRaf = 0;
+      notifyLoaded(force);
+      if (Date.now() < animationWatchUntil) {
+        scheduleNotify(false);
+      }
+    });
+  }
+
+  function watchAnimationFrames(duration) {
+    animationWatchUntil = Math.max(animationWatchUntil, Date.now() + duration);
+    scheduleNotify(false);
+  }
+
+  function startGeometryWatch() {
+    if (!mutationObserver) {
+      mutationObserver = new MutationObserver(function() {
+        watchAnimationFrames(1200);
+      });
+      mutationObserver.observe(document.body, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true,
+      });
+    }
+
+    if (!resizeObserver && window.ResizeObserver) {
+      resizeObserver = new ResizeObserver(function() {
+        watchAnimationFrames(600);
+      });
+      resizeObserver.observe(document.body);
+    }
+
+    if (!measureTimer) {
+      measureTimer = setInterval(function() {
+        scheduleNotify(false);
+      }, 500);
+    }
   }
 
   function hideAboutMenu() {
@@ -59,7 +160,8 @@
     var configKey = JSON.stringify(config);
 
     if (widgetInstance && activeConfigKey === configKey) {
-      notifyLoaded();
+      startGeometryWatch();
+      notifyLoaded(true);
       return;
     }
 
@@ -101,7 +203,8 @@
     function notifyOnce() {
       if (notified) return;
       notified = true;
-      notifyLoaded();
+      startGeometryWatch();
+      notifyLoaded(true);
     }
 
     var checkInterval = setInterval(function() {
